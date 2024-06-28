@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
+import DocumentList from './features/documents/DocumentList';
 
 function App() {
+  const [showDocuments, setShowDocuments] = useState(false);
+
   return (
     <div className="App">
       <header className="bg-purple-600 text-white p-4 flex justify-between items-center">
@@ -23,7 +26,14 @@ function App() {
         </div>
       </header>
       <main className="p-4">
-        <div className="flex space-x-4">
+        <button
+          className="bg-blue-500 text-white px-4 py-2 rounded-md mb-4"
+          onClick={() => setShowDocuments(!showDocuments)}
+        >
+          {showDocuments ? 'Hide Documents' : 'Show Documents'}
+        </button>
+        {showDocuments && <DocumentList />}
+        <div className="flex space-x-4 mt-4">
           <div className="w-1/2 bg-white p-4 rounded-md shadow-md">
             <h2 className="text-xl font-bold">Why do you create a startup?</h2>
             <div className="mt-4">
