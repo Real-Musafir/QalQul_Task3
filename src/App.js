@@ -29,7 +29,7 @@ function App() {
 
   return (
     <div className="App">
-      <header className="bg-purple-600 text-white p-4 flex justify-between items-center">
+      <header className="bg-blue-500 text-white p-4 flex justify-between items-center">
         <div className="text-2xl font-bold">Logo</div>
         <nav>
           <ul className="flex space-x-4">
