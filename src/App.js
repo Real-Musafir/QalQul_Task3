@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import './App.css';
 import DocumentList from './features/documents/DocumentList';
 import Login from './features/auth/Login';
+import DocumentEditor from './features/documents/DocumentEditor';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from './features/auth/authSlice';
 
 function App() {
   const [showDocuments, setShowDocuments] = useState(false);
+  const [editingDocumentId, setEditingDocumentId] = useState(null);
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
 
@@ -41,7 +43,10 @@ function App() {
             >
               {showDocuments ? 'Hide Documents' : 'Show Documents'}
             </button>
-            {showDocuments && <DocumentList />}
+            {showDocuments && (
+              <DocumentList setEditingDocumentId={setEditingDocumentId} />
+            )}
+            {editingDocumentId && <DocumentEditor documentId={editingDocumentId} />}
             <div className="flex space-x-4 mt-4">
               <div className="w-1/2 bg-white p-4 rounded-md shadow-md">
                 <h2 className="text-xl font-bold">Why do you create a startup?</h2>
