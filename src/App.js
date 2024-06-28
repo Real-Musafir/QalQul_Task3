@@ -1,15 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import DocumentList from './features/documents/DocumentList';
 import Login from './features/auth/Login';
 import EmployeeList from './features/employees/EmployeeList';
+import DocumentManagement from './features/documents/DocumentManagement';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from './features/auth/authSlice';
+import { setDocuments, fetchDocuments } from './features/documents/documentSlice';
+import { useSocket } from './context/SocketContext';
 
 function App() {
   const [showDocuments, setShowDocuments] = useState(false);
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
+  const socket = useSocket();
+
+  useEffect(() => {
+    dispatch(fetchDocuments());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (!socket) return;
+
+    socket.on('update-documents', (docs) => {
+      dispatch(setDocuments(docs));
+    });
+  }, [socket, dispatch]);
 
   return (
     <div className="App">
@@ -52,6 +68,7 @@ function App() {
               </div>
               <div className="w-2/3">
                 <EmployeeList />
+                <DocumentManagement />
               </div>
             </div>
           </>
