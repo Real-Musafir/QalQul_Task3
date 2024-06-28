@@ -8,14 +8,6 @@ const EmployeeList = () => {
   const socket = useSocket();
   const onlineUsers = useSelector((state) => state.onlineUsers);
 
-  const employees = [
-    { name: 'Logan Henderson', email: 'logan@company.com', department: 'Accounting', lastLogin: 'September 20, 2019' },
-    { name: 'Susie Carlson', email: 'susie@company.com', department: 'Development', lastLogin: 'September 22, 2019' },
-    { name: 'Markus Benes', email: 'markus@company.com', department: 'Development', lastLogin: 'September 18, 2019' },
-    { name: 'Marie Stephens', email: 'marie@company.com', department: 'Human Resources', lastLogin: 'September 20, 2019' },
-    { name: 'Jacob Gibson', email: 'jacob@company.com', department: 'Sales', lastLogin: 'September 22, 2019' },
-  ];
-
   useEffect(() => {
     if (!socket) return;
 
@@ -38,29 +30,29 @@ const EmployeeList = () => {
             </tr>
           </thead>
           <tbody>
-            {employees.map((employee) => (
-              <tr key={employee.email}>
+            {onlineUsers.map((user) => (
+              <tr key={user.email}>
                 <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
                   <div className="flex items-center">
                     <div className="flex-shrink-0 h-10 w-10">
-                      <img className="h-10 w-10 rounded-full" src={`https://ui-avatars.com/api/?name=${employee.name}`} alt="" />
+                      <img className="h-10 w-10 rounded-full" src={`https://ui-avatars.com/api/?name=${user.name}`} alt="" />
                     </div>
                     <div className="ml-4">
-                      <div className="text-sm leading-5 font-medium text-gray-900">{employee.name}</div>
-                      <div className="text-sm leading-5 text-gray-500">{employee.email}</div>
+                      <div className="text-sm leading-5 font-medium text-gray-900">{user.name}</div>
+                      <div className="text-sm leading-5 text-gray-500">{user.email}</div>
                     </div>
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-                  <div className="text-sm leading-5 text-gray-900">{employee.lastLogin}</div>
-                  <div className="text-sm leading-5 text-gray-500">{new Date(employee.lastLogin).toDateString()}</div>
+                  <div className="text-sm leading-5 text-gray-900">{new Date().toLocaleDateString()}</div>
+                  <div className="text-sm leading-5 text-gray-500">{new Date().toDateString()}</div>
                 </td>
                 <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-sm leading-5 text-gray-500">
-                  {employee.department}
+                  Dummy Department
                 </td>
                 <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-                  <span className={onlineUsers.some(u => u.email === employee.email) ? "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800" : "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"}>
-                    {onlineUsers.some(u => u.email === employee.email) ? "Active" : "Inactive"}
+                  <span className={user.active ? "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800" : "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"}>
+                    {user.active ? "Active" : "Inactive"}
                   </span>
                 </td>
               </tr>
