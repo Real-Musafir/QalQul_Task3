@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 import './App.css';
 import DocumentList from './features/documents/DocumentList';
 import Login from './features/auth/Login';
-import DocumentEditor from './features/documents/DocumentEditor';
+import EmployeeList from './features/employees/EmployeeList';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from './features/auth/authSlice';
 
 function App() {
   const [showDocuments, setShowDocuments] = useState(false);
-  const [editingDocumentId, setEditingDocumentId] = useState(null);
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
 
@@ -43,32 +42,16 @@ function App() {
             >
               {showDocuments ? 'Hide Documents' : 'Show Documents'}
             </button>
-            {showDocuments && (
-              <DocumentList setEditingDocumentId={setEditingDocumentId} />
-            )}
-            {editingDocumentId && <DocumentEditor documentId={editingDocumentId} />}
+            {showDocuments && <DocumentList />}
             <div className="flex space-x-4 mt-4">
-              <div className="w-1/2 bg-white p-4 rounded-md shadow-md">
+              <div className="w-1/3 bg-white p-6 rounded-md shadow-md">
                 <h2 className="text-xl font-bold">Why do you create a startup?</h2>
                 <div className="mt-4">
                   <img src="path/to/chart.jpg" alt="Chart"/>
                 </div>
               </div>
-              <div className="w-1/2 bg-white p-4 rounded-md shadow-md">
-                <h2 className="text-xl font-bold">Employees</h2>
-                <ul>
-                  <li className="flex justify-between items-center py-2">
-                    <div>
-                      <p className="font-bold">Logan Henderson</p>
-                      <p className="text-gray-600">logan@company.com</p>
-                    </div>
-                    <div className="text-right">
-                      <p>September 20, 2019</p>
-                      <p className="text-green-600">Active</p>
-                    </div>
-                  </li>
-                  {/* Add more employees here */}
-                </ul>
+              <div className="w-2/3">
+                <EmployeeList />
               </div>
             </div>
           </>
